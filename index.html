@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo de Código com Highlight.js</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+    <style>
+        .code-container {
+            position: relative;
+            margin: 0 100px;
+        }
+
+        .copy-button {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            background-color: #ffffff;
+            border: 1px solid #b00808;
+            border-radius: 3px;
+            padding: 1px 5px;
+            cursor: pointer;
+            transform: translateY(-50%);
+            line-height: 1;
+        }
+
+        .icon-sm {
+            margin-right: 5px;
+        }
+
+
+        @media screen and (max-width: 767px) {
+            .code-container {
+                margin: 0 10px; /* Ajuste conforme necessário */
+            }
+
+            .copy-button {
+                right: 5px; /* Ajuste conforme necessário */
+                top: 01%;
+            }
+            .code-content {
+                
+                border: 1px solid brown;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<h2>Exemplo de Código com Highlight.js</h2>
+
+<div class="code-container">
+    <pre>
+        <code class="language-ts code-content">
+            function greet(name): void {
+                console.log("Hello, " + name + "!");
+            }
+
+            greet("World");
+        </code>
+    </pre>
+    <button class="copy-button copy-button-js">Copiar código</button>
+</div>
+
+<hr/>
+
+<h2>Código HTML</h2>
+
+<div class="code-container">
+    <pre>
+        <code class="language-html code-content">
+            &lt;div class="example"&gt;
+                &lt;p&gt;Este é um exemplo de código HTML&lt;/p&gt;
+            &lt;/div&gt;
+        </code>
+    </pre>
+    <button class="copy-button copy-button-html">Copiar código</button>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightBlock(block);
+        });
+
+        // Função para copiar o código
+        function copyCode(button) {
+            const code = button.previousElementSibling.querySelector('code');
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(code);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            document.execCommand('copy');
+            selection.removeAllRanges();
+
+            // Mudança temporária no texto e na cor do botão
+            button.textContent = 'Código copiado';
+            button.style.backgroundColor = '#b00808';
+            button.style.color = '#ffffff';
+
+            // Reverter para o texto e cor originais após 2 segundos
+            setTimeout(() => {
+                button.textContent = 'Copiar código';
+                button.style.backgroundColor = '#ffffff';
+                button.style.color = '#b00808';
+            }, 2000);
+        }
+
+        // Adiciona o evento de clique para os botões de cópia
+        document.querySelectorAll('.copy-button-js').forEach((button) => {
+            button.addEventListener('click', () => {
+                copyCode(button);
+            });
+        });
+
+        document.querySelectorAll('.copy-button-html').forEach((button) => {
+            button.addEventListener('click', () => {
+                copyCode(button);
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
